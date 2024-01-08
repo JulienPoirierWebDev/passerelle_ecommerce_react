@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 
 import { createBrowserRouter, RouterProvider } from"react-router-dom";
@@ -22,8 +21,8 @@ const router = createBrowserRouter([
     {path: '/produit/:id', element: <ProductPage/>},
     {path: '/panier', element: <CartPage/>},
     {path: '/connexion', element: <LoginPage/>},
-    {path:'/mon-compte', element: <AccountPage/>},
     {path: "/inscription", element: <RegisterPage/>},
+    {path:'/mon-compte', element: <AccountPage/>},
   ]
   }
 ])

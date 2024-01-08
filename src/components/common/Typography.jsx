@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 
-const Typography = ({ children, tag, variant, customClasses }) => {
+const Typography = ({ children, tag, variant = "primary", customClasses}) => {
   const Component = tag || "p";
 
   const className = clsx({
@@ -10,7 +10,7 @@ const Typography = ({ children, tag, variant, customClasses }) => {
     'text-primary': variant ==="primary",
     'text-light-grey': variant ==="light-grey",
     'text-white': variant ==="white",
-    [customClasses]: true
+    [customClasses]: customClasses
   });
  
   return <Component className={className}>{children}</Component>;

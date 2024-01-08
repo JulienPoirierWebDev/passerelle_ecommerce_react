@@ -4,7 +4,7 @@ import Navbar from "../components/navbar"
 const HeaderLayout = () => {
   return (
     <>
-      <div>
+      <div className="md:px-6 md:m-6 flex justify-between">
         <div>LOGO</div>
         
       <Navbar />
