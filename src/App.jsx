@@ -1,8 +1,13 @@
+import Typography from "./components/common/Typography";
+
 function App() {
   return (
     <>
-      <h1 className="text-red-900">Hello world!</h1> <h2>Goodby</h2>
-      <input type="text" />
+      <Typography tag="h1" variant="dark-primary" customClasses="border-2 border-primary">
+        Hello <Typography tag="span" variant="primary">World</Typography>
+      </Typography>
+
+
     </>
   );
 }
