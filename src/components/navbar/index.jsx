@@ -48,18 +48,18 @@ const Navbar = () =>{
       <Link to="/panier" className="flex  align-center"><img src={cartIcon} alt="Se rendre au panier" /></Link>
     </ul>
 
-    <div className="md:hidden">
+    <div className="md:hidden flex justify-center p-6">
       <Hamburger onToggle={() => setIsOpen(!isOpen)} />   
     </div>
 
-    <div className="md:hidden">
-    {isOpen ?  <div className=" flex flex-col list-none w-48">
+    <div className="md:hidden flex justify-center">
+    {isOpen ?  <div className=" w-screen text-center flex flex-col list-none w-48">
         <Link to="/"><Typography tag="li">Accueil</Typography></Link>
         <Link to="/nos-produits"><Typography tag="li">Nos produits</Typography></Link>
         <Link to="/connexion"><Typography tag="li">Connexion</Typography></Link>
         <Link to="/inscription"><Typography tag="li">Inscription</Typography></Link>
-        <Link to="/mon-compte" className="flex align-center"><Typography tag="li">Mon compte</Typography></Link>
-        <Link to="/panier" className="flex  align-center"><Typography tag="li">Mon panier</Typography></Link>
+        <Link to="/mon-compte" ><Typography tag="li">Mon compte</Typography></Link>
+        <Link to="/panier" ><Typography tag="li">Mon panier</Typography></Link>
       </div> : null }
     </div>
 
