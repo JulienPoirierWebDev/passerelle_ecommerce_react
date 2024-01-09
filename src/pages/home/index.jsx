@@ -1,7 +1,12 @@
+import HeroBlock from "../../components/hero"
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+
+      <HeroBlock />
+
+    </div>
   )
 }
 

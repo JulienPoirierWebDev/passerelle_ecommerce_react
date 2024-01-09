@@ -10,6 +10,7 @@ const Typography = ({ children, tag, variant = "primary", customClasses}) => {
     'text-primary': variant ==="primary",
     'text-light-grey': variant ==="light-grey",
     'text-white': variant ==="white",
+    'text-4xl' : tag === "h2",
     [customClasses]: customClasses
   });
  
