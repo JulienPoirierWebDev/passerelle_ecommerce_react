@@ -11,6 +11,10 @@ export default {
       "white": "#FFFFFF",
       "border-dark": "#CAC6DA",
     },
+    fontFamily: {
+      clashRegular:['ClashRegular', 'sans-serif'],
+      satoshi:['Satoshi', 'sans-serif'],
+    },
   }
   },
   plugins: [],

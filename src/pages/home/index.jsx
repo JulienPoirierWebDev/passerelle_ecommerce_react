@@ -1,10 +1,12 @@
+import Features from "../../components/features"
 import HeroBlock from "../../components/hero"
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="m-16">
 
       <HeroBlock />
+      <Features/>
 
     </div>
   )

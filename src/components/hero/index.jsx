@@ -4,7 +4,7 @@ import Typography from "../common/Typography"
 
 function HeroBlock() {
   return (
-    <div className="flex justify-between bg-dark-primary h-[584px] m-16">
+    <div className="flex justify-between bg-dark-primary h-[584px]">
 
     <div className="pt-12 pb-8 px-12 lg:p-16 flex flex-col justify-between">
       <div>

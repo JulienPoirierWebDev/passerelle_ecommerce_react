@@ -4,7 +4,7 @@ import React from 'react'
 function Button({variant, customClasses, children}) {
 
   const className = clsx({
-    'text-white p-4 bg-opacity-30 bg-black': variant ==="primary",
+    'text-white p-4 bg-opacity-10 bg-light-grey': variant ==="primary",
     [customClasses]: customClasses
   })
 

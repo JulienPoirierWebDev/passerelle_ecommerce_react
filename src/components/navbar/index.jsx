@@ -45,7 +45,7 @@ const Navbar = () =>{
       })}
    
       <Link to="/mon-compte" className="flex align-center"><img src={profileIcon} alt="Voir mon profil" /></Link>
-      <Link to="/panier" className="flex  align-center"><img src={cartIcon} alt="Se rendre au panier" /></Link>
+      <Link to="/panier" className="flex align-center "><img src={cartIcon} alt="Se rendre au panier" />0</Link>
     </ul>
 
     <div className="md:hidden flex justify-center p-6">
