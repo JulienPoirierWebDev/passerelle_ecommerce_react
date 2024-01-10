@@ -11,10 +11,12 @@ import LoginPage from './pages/login/index.jsx';
 import AccountPage from './pages/account/index.jsx';
 import RegisterPage from './pages/register/index.jsx';
 import HeaderLayout from './layouts/HeaderLayout.jsx';
+import ErrorPage from './pages/error/index.jsx';
 
 const router = createBrowserRouter([
   {
   element: <HeaderLayout/>,
+  // errorElement:<ErrorPage/>,
   children : [
     {path: '/', element: <HomePage/>},
     {path: '/nos-produits', element: <ProductsPage/>},

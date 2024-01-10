@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Typography from '../common/Typography'
+import useFetch from '../../hooks/useFetch';
 
 function Listings() {
 
-  const [items, setItems] = useState([])
+  const {items, loading, error} = useFetch({url:'https://passerelle-shop-api.julienpoirier-webdev.com/products'})
 
   let figurines = [];
   let voitures = [];
@@ -27,45 +28,13 @@ function Listings() {
     } )
   }
 
-  console.log(figurines);
-
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchData =  (controller) => {
-
-
-      try {
-
-        setTimeout(async() => {
-
-          const signal = controller.signal
-
-          const response = await fetch('https://passerelle-shop-api.julienpoirier-webdev.com/products', {signal})
-          const data = await response.json()
-          setItems(data)
-          console.log(data);  
-        }, 3000)
-    
-      }
-      catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchData(controller)
-
-
-    return (() => {
-      controller.abort("cleanup")
-      // cleanup (pas obligatoire)
-    })
-  }, [])
 
   
   return (
     <div>
+
+      {loading ? <p>Chargement</p>:null}
+      {error ? <p>{error}</p> : null}
    
 
         {voitures.length > 0 ?

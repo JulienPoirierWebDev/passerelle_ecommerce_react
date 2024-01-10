@@ -5,10 +5,10 @@ import Listings from "../../components/listings"
 const HomePage = () => {
   return (
     <div className="m-16 mt-20 ">
+      <Listings/>
 
       <HeroBlock />
       <Features/>
-      <Listings/>
 
     </div>
   )
