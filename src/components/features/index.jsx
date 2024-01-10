@@ -2,6 +2,7 @@ import React from 'react'
 import Typography from '../common/Typography'
 
 const FeatureBlock = ({feature}) => {
+  
 
   return(
   <div key={feature.title} className='w-72 mb-12'>
