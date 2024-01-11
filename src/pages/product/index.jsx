@@ -1,9 +1,30 @@
-import { useState } from "react";
-
 const ProductPage = () => {
   // get product id from url
   // fetch product data
   // display product data
+
+  const product = {
+    _id: "659a7479aead0016927ff203",
+    name: "Figurine Super Mario Classique",
+    description:
+      "Réplique détaillée de Mario, le célèbre plombier de Nintendo.",
+    price: 35,
+    category: "659a7435aead0016927ff200",
+    stock: 150,
+    mainImageURL: "https://image.smythstoys.com/original/desktop/139239.jpg",
+    additionalImages: [],
+    __v: 0,
+  };
+
+  const isProductInCart = () => {
+    return false;
+  };
+
+  const getQuantityInCart = () => console.log("la quantité est de 0 ");
+
+  const addToCart = () => console.log("Ajout au panier");
+
+  const removeOneToCart = () => console.log("Moins 1 au panier");
 
   return (
     <div className="flex justify-center border-y">
