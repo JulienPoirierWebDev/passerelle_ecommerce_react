@@ -1,54 +1,42 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
+const useFetch = ({ url }) => {
+  const [dataFetched, setDataFetched] = useState(null);
 
-const useFetch = ({url}) => {
-
-  const [items, setItems] = useState([])
-
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
-    setError(false)
+    setLoading(true);
+    setError(false);
     const controller = new AbortController();
 
-    const fetchData =  async (controller) => {
-
+    const fetchData = async (controller) => {
       try {
+        const signal = controller.signal;
 
-          const signal = controller.signal
+        const response = await fetch(url, { signal });
+        const data = await response.json();
+        setDataFetched(data);
 
-          const response = await fetch(url, {signal})
-          const data = await response.json()
-          setItems(data)
-      
-          setLoading(false)
-
-      }
-      catch (error) {
-        if(error !== "ABORT") {
-         
-          
+        setLoading(false);
+      } catch (error) {
+        if (error !== "ABORT") {
+          console.log(error);
         }
-        
       }
-    }
+    };
 
     setTimeout(() => {
-      fetchData(controller)
+      fetchData(controller);
+    }, 1000);
 
-    },1000)
+    return () => {
+      controller.abort("ABORT");
+    };
+  }, [url]);
 
-
-    return (() => {
-      controller.abort("ABORT")
-    })
-  }, [])
-
-
-  return {items, loading, error}
-
-}
+  return { dataFetched, loading, error };
+};
 
 export default useFetch;

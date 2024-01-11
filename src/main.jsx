@@ -1,4 +1,3 @@
-import { createContext, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -12,6 +11,7 @@ import AccountPage from "./pages/account/index.jsx";
 import RegisterPage from "./pages/register/index.jsx";
 import HeaderLayout from "./layouts/HeaderLayout.jsx";
 import ErrorPage from "./pages/error/index.jsx";
+import UserContextProvider from "./contexts/UserContext/UserContextProdider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,16 +29,13 @@ const router = createBrowserRouter([
   },
 ]);
 
-export const UserContext = createContext(null);
-
 function App() {
-  const [user, setUser] = useState(null);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContextProvider>
       <RouterProvider router={router}>
         <HeaderLayout />
       </RouterProvider>
-    </UserContext.Provider>
+    </UserContextProvider>
   );
 }
 

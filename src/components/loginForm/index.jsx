@@ -1,14 +1,17 @@
 import Typography from "../common/Typography";
 import InputWithLabel from "../common/InputWithLabel";
-import { useContext, useRef, useState } from "react";
-import { UserContext } from "../../main";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useUserContext from "../../hooks/useUserContext";
 
 function LoginForm() {
   const formRef = useRef(null);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
+
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -62,6 +65,7 @@ function LoginForm() {
       } else {
         if (data.jwt) {
           setUser(true);
+          navigate("/");
         }
       }
 

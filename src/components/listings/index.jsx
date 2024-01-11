@@ -1,25 +1,26 @@
 import Typography from "../common/Typography";
 import useFetch from "../../hooks/useFetch";
 import ProductCard from "../common/ProductCard";
+import { Link } from "react-router-dom";
 
 function Listings() {
-  const { items, loading, error } = useFetch({
+  const { dataFetched, loading, error } = useFetch({
     url: "https://passerelle-shop-api.julienpoirier-webdev.com/products",
   });
 
   let figurines = [];
   let voitures = [];
 
-  if (items.length > 0) {
-    figurines = items.filter((item) => {
+  if (dataFetched && dataFetched.length > 0) {
+    figurines = dataFetched.filter((item) => {
       if (item.category.name === "Figurines et Collectibles") {
         return item;
       }
     });
   }
 
-  if (items.length > 0) {
-    voitures = items.filter((item) => {
+  if (dataFetched && dataFetched.length > 0) {
+    voitures = dataFetched.filter((item) => {
       if (item.category.name === "Voitures miniatures") {
         return item;
       }
@@ -39,7 +40,11 @@ function Listings() {
 
           <div className="flex flex-row flex-wrap justify-center">
             {voitures.map((item) => {
-              return <ProductCard item={item} key={item.name} />;
+              return (
+                <Link key={item.name} to={`/produit/${item._id}`}>
+                  <ProductCard item={item} />
+                </Link>
+              );
             })}
           </div>
         </>
@@ -53,7 +58,11 @@ function Listings() {
 
           <div className="flex flex-row flex-wrap justify-center">
             {figurines.map((item) => {
-              return <ProductCard item={item} key={item.name} />;
+              return (
+                <Link key={item.name} to={`/produit/${item._id}`}>
+                  <ProductCard item={item} />
+                </Link>
+              );
             })}
           </div>
         </>

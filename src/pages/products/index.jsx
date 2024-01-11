@@ -1,7 +1,7 @@
 import useFetch from "../../hooks/useFetch";
 
 const ProductsPage = () => {
-  const { items, loading, error } = useFetch({
+  const { dataFetched, loading, error } = useFetch({
     url: "https://passerelle-shop-api.julienpoirier-webdev.com/products",
   });
 
@@ -10,9 +10,9 @@ const ProductsPage = () => {
       {loading ? <p>loading</p> : null}
       {error ? <p>error</p> : null}
 
-      {items.length > 0 ? (
+      {dataFetched && dataFetched.length > 0 ? (
         <>
-          {items.map((element) => {
+          {dataFetched.map((element) => {
             return <p key={element.name}>{element.name}</p>;
           })}
         </>

@@ -3,13 +3,13 @@ import Typography from "../common/Typography";
 import cartIcon from "../../assets/icons/cart.svg";
 import profileIcon from "../../assets/icons/profile.svg";
 import Hamburger from "hamburger-react";
-import { useContext, useState } from "react";
-import { UserContext } from "../../main";
+import { useState } from "react";
+import useUserContext from "../../hooks/useUserContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   let location = useLocation();
 
