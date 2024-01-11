@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import Typography from "../../components/common/Typography";
+import { useState } from "react";
 
 const ProductPage = () => {
   // get product id from url
@@ -13,17 +14,83 @@ const ProductPage = () => {
     url: `https://passerelle-shop-api.julienpoirier-webdev.com/products/${id}`,
   });
 
-  console.log(dataFetched, loading, error);
+  const [panier, setPanier] = useState(null);
 
-  const isProductInCart = () => {
-    return false;
+  // console.log(dataFetched, loading, error);
+
+  const isProductInCart = (itemId) => {
+    if (panier === null) {
+      return false;
+    }
+    const isInCart = panier.find((item) => item.productId === itemId);
+
+    return Boolean(isInCart);
   };
 
-  const getQuantityInCart = () => console.log("la quantité est de 0 ");
+  const getQuantityInCart = (itemId) => {
+    const myItem = panier.find((oneItemInPanier) => {
+      console.log(oneItemInPanier);
+      return oneItemInPanier.productId === itemId;
+    });
 
-  const addToCart = () => console.log("Ajout au panier");
+    console.log(myItem);
 
-  const removeOneToCart = () => console.log("Moins 1 au panier");
+    if (myItem) {
+      return myItem.quantity;
+    }
+
+    return 0;
+  };
+
+  const addToCart = (item) => {
+    const isInCart = isProductInCart(item._id);
+    if (isInCart) {
+      setPanier(
+        panier.map((itemInPanier) => {
+          if (itemInPanier.productId === item._id) {
+            return {
+              productId: itemInPanier.productId,
+              quantity: itemInPanier.quantity + 1,
+            };
+          }
+          return itemInPanier;
+        })
+      );
+    } else {
+      setPanier([
+        {
+          productId: item._id,
+          quantity: 1,
+        },
+      ]);
+    }
+  };
+
+  const removeOneToCart = (item) => {
+    const isInCart = isProductInCart(item._id);
+    if (isInCart) {
+      const myItemInCart = panier.find(
+        (oneItemInPanier) => oneItemInPanier.productId === item._id
+      );
+
+      if (myItemInCart.quantity === 1) {
+        setPanier(panier.filter((item) => item.productId !== id));
+        return;
+      } else {
+        setPanier(
+          panier.map((oneItemInPanier) => {
+            if (oneItemInPanier.productId === item._id) {
+              return {
+                productId: oneItemInPanier.productId,
+                quantity: oneItemInPanier.quantity - 1,
+              };
+            }
+            return oneItemInPanier;
+          })
+        );
+      }
+    }
+  };
 
   return (
     <div className="flex justify-center border-y">
@@ -52,7 +119,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          {isProductInCart() ? (
+          {isProductInCart(id) ? (
             <div className="flex items-center mt-4">
               <button
                 onClick={() => addToCart(dataFetched)}
@@ -61,7 +128,7 @@ const ProductPage = () => {
                 +
               </button>
               <div className="px-4 py-2 border-t border-b border-gray-300">
-                Quantité dans le panier: {getQuantityInCart(dataFetched)}
+                Quantité dans le panier: {getQuantityInCart(id)}
               </div>
               <button
                 onClick={() => removeOneToCart(dataFetched)}

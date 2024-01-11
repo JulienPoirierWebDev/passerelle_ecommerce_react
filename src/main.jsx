@@ -11,7 +11,7 @@ import AccountPage from "./pages/account/index.jsx";
 import RegisterPage from "./pages/register/index.jsx";
 import HeaderLayout from "./layouts/HeaderLayout.jsx";
 import ErrorPage from "./pages/error/index.jsx";
-import UserContextProvider from "./contexts/UserContext/UserContextProdider.jsx";
+import UserContextProvider from "./contexts/UserContext/UserContextProvider.jsx";
 
 const router = createBrowserRouter([
   {
