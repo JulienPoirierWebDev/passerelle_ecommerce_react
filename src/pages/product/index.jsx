@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import Typography from "../../components/common/Typography";
 
 const ProductPage = () => {
   // get product id from url
@@ -28,18 +29,27 @@ const ProductPage = () => {
     <div className="flex justify-center border-y">
       {dataFetched ? (
         <div className=" p-4 ">
-          <h1 className="text-2xl font-semibold mb-2">{dataFetched.name}</h1>
-          <p className="text-gray-600 mb-2">{dataFetched.description}</p>
-          <p className="text-green-600 font-bold text-lg mb-2">
-            {dataFetched.price} €
-          </p>
-          <p className="text-gray-700 mb-4">En stock : {dataFetched.stock}</p>
-          <div className="w-[400px]">
-            <img
-              src={dataFetched.mainImageURL}
-              alt={dataFetched.name}
-              className="w-full rounded-lg"
-            />
+          <div className="flex gap-12">
+            <div className="flex flex-col justify-center">
+              <Typography tag="h1">{dataFetched.name}</Typography>
+              <Typography className="text-gray-600 mb-2">
+                {dataFetched.description}
+              </Typography>
+              <Typography customClasses=" font-bold text-lg mb-2">
+                {dataFetched.price} €
+              </Typography>
+              <Typography className="text-gray-700 mb-4">
+                En stock : {dataFetched.stock}
+              </Typography>
+            </div>
+
+            <div className="w-[400px]">
+              <img
+                src={dataFetched.mainImageURL}
+                alt={dataFetched.name}
+                className="w-full rounded-lg"
+              />
+            </div>
           </div>
 
           {isProductInCart() ? (
@@ -63,9 +73,9 @@ const ProductPage = () => {
           ) : (
             <button
               onClick={() => {
-                addToCart(product);
+                addToCart(dataFetched);
               }}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg mt-4"
+              className="bg-dark-primary text-white px-4 py-2 rounded-lg mt-4 w-full"
             >
               Ajouter au panier
             </button>
