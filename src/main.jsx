@@ -16,7 +16,7 @@ import ErrorPage from "./pages/error/index.jsx";
 const router = createBrowserRouter([
   {
     element: <HeaderLayout />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/nos-produits", element: <ProductsPage /> },
