@@ -12,6 +12,9 @@ import RegisterPage from "./pages/register/index.jsx";
 import HeaderLayout from "./layouts/HeaderLayout.jsx";
 import ErrorPage from "./pages/error/index.jsx";
 import UserContextProvider from "./contexts/UserContext/UserContextProvider.jsx";
+import CartContextProvider from "./contexts/CartContext/CartContextProvider.jsx";
+import { useContext } from "react";
+import CartContext from "./contexts/CartContext/CartContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +34,15 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <UserContextProvider>
-      <RouterProvider router={router}>
-        <HeaderLayout />
-      </RouterProvider>
-    </UserContextProvider>
+    <>
+      <CartContextProvider>
+        <UserContextProvider>
+          <RouterProvider router={router}>
+            <HeaderLayout />
+          </RouterProvider>
+        </UserContextProvider>
+      </CartContextProvider>
+    </>
   );
 }
 

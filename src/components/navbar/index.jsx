@@ -5,11 +5,14 @@ import profileIcon from "../../assets/icons/profile.svg";
 import Hamburger from "hamburger-react";
 import { useState } from "react";
 import useUserContext from "../../hooks/useUserContext";
+import useCartContext from "../../hooks/useCartContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { user } = useUserContext();
+
+  const { getTotalNumberOfItemsInCart } = useCartContext();
 
   let location = useLocation();
 
@@ -79,11 +82,12 @@ const Navbar = () => {
               <Link to="/mon-compte" className="flex align-center">
                 <img src={profileIcon} alt="Voir mon profil" />
               </Link>
-              <Link to="/panier" className="flex align-center ">
-                <img src={cartIcon} alt="Se rendre au panier" />0
-              </Link>
             </>
           ) : null}
+          <Link to="/panier" className="flex align-center ">
+            <img src={cartIcon} alt="Se rendre au panier" />
+            {getTotalNumberOfItemsInCart()}
+          </Link>
         </ul>
 
         <div className="md:hidden flex justify-center p-6">

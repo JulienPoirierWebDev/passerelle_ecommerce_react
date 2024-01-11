@@ -33,7 +33,7 @@ function LoginForm() {
       });
     }
 
-    if (errors === []) {
+    if (errors.length > 0) {
       return;
     }
 
