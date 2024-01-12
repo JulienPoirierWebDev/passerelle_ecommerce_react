@@ -1,15 +1,29 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import CartContext from "./CartContext";
+import useUserContext from "../../hooks/useUserContext";
 
-const CART_TYPES = {
+export const CART_TYPES = {
   ADD: "addOneItem",
   REMOVE_ONE_QUANTITY: "removeOneFromOneItem",
   REMOVE_ONE_ITEM: "removeOneItem",
   CLEAR: "removeAllItems",
+  CHANGE_PANIER: "changePanier",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case CART_TYPES.CHANGE_PANIER:
+      return { ...state, panier: action.payload.panier };
+
+    case CART_TYPES.CLEAR:
+      return { ...state, panier: [] };
+    case CART_TYPES.REMOVE_ONE_ITEM:
+      return {
+        ...state,
+        panier: state.panier.filter(
+          (item) => item.productId !== action.payload.item._id
+        ),
+      };
     case CART_TYPES.ADD:
       if (
         state.panier.find((item) => item.productId === action.payload.item._id)
@@ -17,7 +31,7 @@ const reducer = (state, action) => {
         const nouveauPanier = state.panier.map((itemInPanier) => {
           if (itemInPanier.productId === action.payload.item._id) {
             return {
-              productId: itemInPanier.productId,
+              ...itemInPanier,
               quantity: itemInPanier.quantity + 1,
             };
           }
@@ -30,11 +44,16 @@ const reducer = (state, action) => {
           ...state,
           panier: [
             ...state.panier,
-            { productId: action.payload.item._id, quantity: 1 },
+            {
+              ...action.payload.item,
+              productId: action.payload.item._id,
+              quantity: 1,
+            },
           ],
         };
       }
     case CART_TYPES.REMOVE_ONE_QUANTITY:
+      console.log(action.payload.item);
       if (
         state.panier.find((item) => item.productId === action.payload.item._id)
       ) {
@@ -50,9 +69,10 @@ const reducer = (state, action) => {
           return { ...state, panier: newPanier };
         } else {
           const newPanier = state.panier.map((testedItem) => {
-            if (testedItem.productId !== itemToUpdate._id) {
+            console.log(testedItem.productId, itemToUpdate._id);
+            if (testedItem.productId === itemToUpdate._id) {
               return {
-                productId: testedItem.productId,
+                ...testedItem,
                 quantity: testedItem.quantity - 1,
               };
             } else {
@@ -71,7 +91,13 @@ const reducer = (state, action) => {
 };
 
 const CartContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, { panier: [] });
+  // checkif panier is in local storage
+  const panierFromStorage = localStorage.getItem("panier");
+  const initialPanier = panierFromStorage ? JSON.parse(panierFromStorage) : [];
+
+  const [state, dispatch] = useReducer(reducer, { panier: initialPanier });
+
+  const { user } = useUserContext();
 
   const { panier } = state;
 
@@ -86,11 +112,8 @@ const CartContextProvider = ({ children }) => {
 
   const getQuantityInCart = (itemId) => {
     const myItem = panier.find((oneItemInPanier) => {
-      console.log(oneItemInPanier);
       return oneItemInPanier.productId === itemId;
     });
-
-    console.log(myItem);
 
     if (myItem) {
       return myItem.quantity;
@@ -112,6 +135,33 @@ const CartContextProvider = ({ children }) => {
   // remove all items
 
   // remove all quantity of one item
+
+  useEffect(() => {
+    const sendPanierToServer = async () => {
+      const request = await fetch(
+        `http://passerelle-shop-api.julienpoirier-webdev.com/carts/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.jwt}`,
+          },
+          body: JSON.stringify({
+            products: panier,
+          }),
+        }
+      );
+
+      const response = await request.json();
+
+      console.log(response);
+    };
+    if (user) {
+      // sendPanierToServer();
+    } else {
+      localStorage.setItem("panier", JSON.stringify(panier));
+    }
+  }, [panier, user]);
 
   return (
     <CartContext.Provider

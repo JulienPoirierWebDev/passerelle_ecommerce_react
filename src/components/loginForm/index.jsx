@@ -3,6 +3,7 @@ import InputWithLabel from "../common/InputWithLabel";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useUserContext from "../../hooks/useUserContext";
+import useFetch from "../../hooks/useFetch";
 
 function LoginForm() {
   const formRef = useRef(null);
@@ -65,6 +66,7 @@ function LoginForm() {
       } else {
         if (data.jwt) {
           setUser(data);
+
           navigate("/");
         }
       }

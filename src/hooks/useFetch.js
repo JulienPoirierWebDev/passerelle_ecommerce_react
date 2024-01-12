@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFetch = ({ url }) => {
+const useFetch = ({ url, options }) => {
   const [dataFetched, setDataFetched] = useState(null);
 
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,10 @@ const useFetch = ({ url }) => {
       try {
         const signal = controller.signal;
 
-        const response = await fetch(url, { signal });
+        const response = await fetch(url, {
+          ...options,
+          signal,
+        });
         const data = await response.json();
         setDataFetched(data);
 

@@ -35,13 +35,13 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <CartContextProvider>
-        <UserContextProvider>
+      <UserContextProvider>
+        <CartContextProvider>
           <RouterProvider router={router}>
             <HeaderLayout />
           </RouterProvider>
-        </UserContextProvider>
-      </CartContextProvider>
+        </CartContextProvider>
+      </UserContextProvider>
     </>
   );
 }
