@@ -27,9 +27,7 @@ const useFetch = ({ url }) => {
       }
     };
 
-    setTimeout(() => {
-      fetchData(controller);
-    }, 1000);
+    fetchData(controller);
 
     return () => {
       controller.abort("ABORT");

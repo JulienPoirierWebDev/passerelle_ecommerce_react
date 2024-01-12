@@ -1,8 +1,8 @@
 import { useState } from "react";
 import CartContext from "./CartContext";
 
-const CartContextProvider = ({ children }) => {
-  const [panier, setPanier] = useState([]);
+export const useContextValue = (initialValue) => {
+  const [panier, setPanier] = useState(initialValue || []);
 
   const isProductInCart = (itemId) => {
     if (panier === null) {
@@ -90,6 +90,27 @@ const CartContextProvider = ({ children }) => {
     return total;
   };
 
+  return {
+    panier,
+    setPanier,
+    isProductInCart,
+    getQuantityInCart,
+    addToCart,
+    removeOneToCart,
+    getTotalNumberOfItemsInCart,
+  };
+};
+
+const CartContextProvider = ({ children }) => {
+  const {
+    panier,
+    setPanier,
+    isProductInCart,
+    getQuantityInCart,
+    addToCart,
+    removeOneToCart,
+    getTotalNumberOfItemsInCart,
+  } = useContextValue();
   return (
     <CartContext.Provider
       value={{
