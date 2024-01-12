@@ -90,6 +90,10 @@ const CartContextProvider = ({ children }) => {
     return total;
   };
 
+  // remove all items
+
+  // remove all quantity of one item
+
   return (
     <CartContext.Provider
       value={{
