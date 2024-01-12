@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ProductCard from "../../components/common/ProductCard";
 import useFetch from "../../hooks/useFetch";
 
@@ -14,7 +15,11 @@ const ProductsPage = () => {
       {dataFetched && dataFetched.length > 0 ? (
         <>
           {dataFetched.map((element) => {
-            return <ProductCard key={element.id} item={element} />;
+            return (
+              <Link key={element._id} to={`/produit/${element._id}`}>
+                <ProductCard item={element} />
+              </Link>
+            );
           })}
         </>
       ) : null}

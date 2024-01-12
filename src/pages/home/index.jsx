@@ -23,9 +23,10 @@ const useConnecterUserPanier = () => {
       const response = await request.json();
       console.log(response);
       if (response && response.products) {
+        const panier = response.products.map((product) => product.productId);
         dispatch({
           type: CART_TYPES.CHANGE_PANIER,
-          payload: { panier: response.products },
+          payload: { panier: panier },
         });
       }
     };
@@ -39,7 +40,7 @@ const HomePage = () => {
   // useConnecterUserPanier();
   return (
     <div className="m-16 mt-20 ">
-      <CalculateWithUseReducer />
+      {/* <CalculateWithUseReducer /> */}
       <HeroBlock />
       <Features />
       <Listings />
