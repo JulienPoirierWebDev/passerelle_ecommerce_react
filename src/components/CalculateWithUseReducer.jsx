@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import reducer from "../reducers/bankReducer.js/reducer";
+import BANKTYPES from "../reducers/bankReducer.js/actions";
 
 function CalculateWithUseReducer() {
   const initialState = {
@@ -29,25 +30,33 @@ function CalculateWithUseReducer() {
       <div>
         <div>
           <button
-            onClick={() => dispatch({ type: "add", payload: { amount: 1 } })}
+            onClick={() =>
+              dispatch({ type: BANKTYPES.ADD, payload: { amount: 1 } })
+            }
             className="m-2 p-4 bg-black text-white"
           >
             Add 1
           </button>
           <button
-            onClick={() => dispatch({ type: "add", payload: { amount: 5 } })}
+            onClick={() =>
+              dispatch({ type: BANKTYPES.ADD, payload: { amount: 5 } })
+            }
             className="m-2 p-4 bg-black text-white"
           >
             Add 5
           </button>
           <button
-            onClick={() => dispatch({ type: "add", payload: { amount: 10 } })}
+            onClick={() =>
+              dispatch({ type: BANKTYPES.ADD, payload: { amount: 10 } })
+            }
             className="m-2 p-4 bg-black text-white"
           >
             Add 10
           </button>
           <button
-            onClick={() => dispatch({ type: "add", payload: { amount: 50 } })}
+            onClick={() =>
+              dispatch({ type: BANKTYPES.ADD, payload: { amount: 50 } })
+            }
             className="m-2 p-4 bg-black text-white"
           >
             Add 50
@@ -57,7 +66,7 @@ function CalculateWithUseReducer() {
         <div>
           <button
             onClick={() =>
-              dispatch({ type: "substract", payload: { amount: 1 } })
+              dispatch({ type: BANKTYPES.SUBSTRACT, payload: { amount: 1 } })
             }
             className="m-2 p-4 bg-black text-white"
           >
@@ -65,7 +74,7 @@ function CalculateWithUseReducer() {
           </button>
           <button
             onClick={() =>
-              dispatch({ type: "substract", payload: { amount: 5 } })
+              dispatch({ type: BANKTYPES.SUBSTRACT, payload: { amount: 5 } })
             }
             className="m-2 p-4 bg-black text-white"
           >
@@ -73,7 +82,7 @@ function CalculateWithUseReducer() {
           </button>
           <button
             onClick={() =>
-              dispatch({ type: "substract", payload: { amount: 10 } })
+              dispatch({ type: BANKTYPES.SUBSTRACT, payload: { amount: 10 } })
             }
             className="m-2 p-4 bg-black text-white"
           >
@@ -81,7 +90,7 @@ function CalculateWithUseReducer() {
           </button>
           <button
             onClick={() =>
-              dispatch({ type: "substract", payload: { amount: 50 } })
+              dispatch({ type: BANKTYPES.SUBSTRACT, payload: { amount: 50 } })
             }
             className="m-2 p-4 bg-black text-white"
           >
@@ -91,7 +100,7 @@ function CalculateWithUseReducer() {
       </div>
 
       <button
-        onClick={() => dispatch({ type: "reset" })}
+        onClick={() => dispatch({ type: BANKTYPES.RESET })}
         className="m-2 p-4 bg-black text-white"
       >
         Reset

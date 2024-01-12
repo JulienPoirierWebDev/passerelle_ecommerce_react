@@ -1,30 +1,37 @@
+import BANKTYPES from "./actions";
+
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "add":
-      if (state.debt > 0) {
-        if (action.payload.amount > state.debt) {
-          const reste = action.payload.amount - state.debt;
+  const amount = action.payload?.amount || 0;
+  const total = state.total;
+  const debt = state.debt;
+  const type = action.type;
+
+  switch (type) {
+    case BANKTYPES.ADD:
+      if (debt > 0) {
+        if (amount > debt) {
+          const reste = amount - debt;
           return { ...state, debt: 0, error: "", total: reste };
         }
 
-        return { ...state, debt: state.debt - action.payload.amount };
+        return { ...state, debt: debt - amount };
       }
-      return { ...state, total: state.total + action.payload.amount };
+      return { ...state, total: total + amount };
 
-    case "substract":
-      if (action.payload.amount > state.total) {
-        const reste = action.payload.amount - state.total;
+    case BANKTYPES.SUBSTRACT:
+      if (amount > total) {
+        const reste = amount - total;
         return {
           ...state,
           total: 0,
-          debt: state.debt + reste,
+          debt: debt + reste,
           error: "Tu vas avoir des dettes",
         };
       }
 
-      return { ...state, total: state.total - action.payload.amount };
+      return { ...state, total: total - amount };
 
-    case "reset":
+    case BANKTYPES.RESET:
       return { ...state, total: 0, error: "", debt: 0 };
     default:
       break;
