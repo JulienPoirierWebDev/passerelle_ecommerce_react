@@ -1,24 +1,17 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import Typography from "../../components/common/Typography";
-//import { useState } from "react";
-import { useContext } from "react";
-import CartContext from "../../contexts/CartContext/CartContext";
+
 import useCartContext from "../../hooks/useCartContext";
 
 const ProductPage = () => {
-  // get product id from url
-  // fetch product data
-  // display product data
-
   const { id } = useParams();
 
   const { dataFetched, loading, error } = useFetch({
     url: `https://passerelle-shop-api.julienpoirier-webdev.com/products/${id}`,
   });
 
-  const { isProductInCart, addToCart, getQuantityInCart, removeOneToCart } =
-    useCartContext();
+  const { isProductInCart, getQuantityInCart, dispatch } = useCartContext();
 
   return (
     <div className="flex justify-center border-y">
@@ -50,7 +43,12 @@ const ProductPage = () => {
           {isProductInCart(id) ? (
             <div className="flex items-center mt-4">
               <button
-                onClick={() => addToCart(dataFetched)}
+                onClick={() =>
+                  dispatch({
+                    type: "addOneItem",
+                    payload: { item: dataFetched },
+                  })
+                }
                 className="bg-blue-500 text-white px-4 py-2 rounded-l-lg"
               >
                 +
@@ -59,7 +57,12 @@ const ProductPage = () => {
                 Quantité dans le panier: {getQuantityInCart(id)}
               </div>
               <button
-                onClick={() => removeOneToCart(dataFetched)}
+                onClick={() =>
+                  dispatch({
+                    type: "removeOneFromOneItem",
+                    payload: { item: dataFetched },
+                  })
+                }
                 className="bg-red-500 text-white px-4 py-2 rounded-r-lg"
               >
                 -
@@ -68,7 +71,10 @@ const ProductPage = () => {
           ) : (
             <button
               onClick={() => {
-                addToCart(dataFetched);
+                dispatch({
+                  type: "addOneItem",
+                  payload: { item: dataFetched },
+                });
               }}
               className="bg-dark-primary text-white px-4 py-2 rounded-lg mt-4 w-full"
             >

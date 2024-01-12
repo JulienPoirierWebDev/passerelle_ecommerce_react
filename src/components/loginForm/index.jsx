@@ -64,7 +64,7 @@ function LoginForm() {
         setErrors([data.message]);
       } else {
         if (data.jwt) {
-          setUser(true);
+          setUser(data);
           navigate("/");
         }
       }

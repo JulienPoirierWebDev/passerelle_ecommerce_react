@@ -1,8 +1,79 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import CartContext from "./CartContext";
 
+const CART_TYPES = {
+  ADD: "addOneItem",
+  REMOVE_ONE_QUANTITY: "removeOneFromOneItem",
+  REMOVE_ONE_ITEM: "removeOneItem",
+  CLEAR: "removeAllItems",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case CART_TYPES.ADD:
+      if (
+        state.panier.find((item) => item.productId === action.payload.item._id)
+      ) {
+        const nouveauPanier = state.panier.map((itemInPanier) => {
+          if (itemInPanier.productId === action.payload.item._id) {
+            return {
+              productId: itemInPanier.productId,
+              quantity: itemInPanier.quantity + 1,
+            };
+          }
+          return itemInPanier;
+        });
+
+        return { ...state, panier: nouveauPanier };
+      } else {
+        return {
+          ...state,
+          panier: [
+            ...state.panier,
+            { productId: action.payload.item._id, quantity: 1 },
+          ],
+        };
+      }
+    case CART_TYPES.REMOVE_ONE_QUANTITY:
+      if (
+        state.panier.find((item) => item.productId === action.payload.item._id)
+      ) {
+        const itemToUpdate = state.panier.find(
+          (item) => item.productId === action.payload.item._id
+        );
+
+        if (itemToUpdate.quantity === 1) {
+          const newPanier = state.panier.filter(
+            (testedItem) => testedItem.productId !== itemToUpdate.productId
+          );
+
+          return { ...state, panier: newPanier };
+        } else {
+          const newPanier = state.panier.map((testedItem) => {
+            if (testedItem.productId !== itemToUpdate._id) {
+              return {
+                productId: testedItem.productId,
+                quantity: testedItem.quantity - 1,
+              };
+            } else {
+              return testedItem;
+            }
+          });
+
+          return { ...state, panier: newPanier };
+        }
+      } else {
+        throw new Error("Le produit ciblé n'est pas dans le panier");
+      }
+    default:
+      break;
+  }
+};
+
 const CartContextProvider = ({ children }) => {
-  const [panier, setPanier] = useState([]);
+  const [state, dispatch] = useReducer(reducer, { panier: [] });
+
+  const { panier } = state;
 
   const isProductInCart = (itemId) => {
     if (panier === null) {
@@ -28,58 +99,6 @@ const CartContextProvider = ({ children }) => {
     return 0;
   };
 
-  const addToCart = (item) => {
-    const isInCart = isProductInCart(item._id);
-    if (isInCart) {
-      setPanier(
-        panier.map((itemInPanier) => {
-          if (itemInPanier.productId === item._id) {
-            return {
-              productId: itemInPanier.productId,
-              quantity: itemInPanier.quantity + 1,
-            };
-          }
-          return itemInPanier;
-        })
-      );
-    } else {
-      setPanier([
-        ...panier,
-        {
-          productId: item._id,
-          quantity: 1,
-        },
-      ]);
-    }
-  };
-
-  const removeOneToCart = (item) => {
-    const isInCart = isProductInCart(item._id);
-    console.log(isInCart);
-    if (isInCart) {
-      const myItemInCart = panier.find(
-        (oneItemInPanier) => oneItemInPanier.productId === item._id
-      );
-      console.log(myItemInCart);
-      if (myItemInCart.quantity === 1) {
-        setPanier(panier.filter((oneItem) => oneItem.productId !== item._id));
-        return;
-      } else {
-        setPanier(
-          panier.map((oneItemInPanier) => {
-            if (oneItemInPanier.productId === item._id) {
-              return {
-                productId: oneItemInPanier.productId,
-                quantity: oneItemInPanier.quantity - 1,
-              };
-            }
-            return oneItemInPanier;
-          })
-        );
-      }
-    }
-  };
-
   const getTotalNumberOfItemsInCart = () => {
     let total = 0;
     if (panier) {
@@ -99,8 +118,7 @@ const CartContextProvider = ({ children }) => {
       value={{
         isProductInCart,
         getQuantityInCart,
-        addToCart,
-        removeOneToCart,
+        dispatch,
         getTotalNumberOfItemsInCart,
         panier,
       }}
